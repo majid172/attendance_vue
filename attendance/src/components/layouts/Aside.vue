@@ -111,7 +111,7 @@ import {RouterLink} from "vue-router";
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Leave Management</span></li>
       <!-- Cards -->
       <li class="menu-item">
-        <router-link to="" class="menu-link">
+        <router-link to="/yearly-leave" class="menu-link">
           <i class="menu-icon tf-icons bx bx-collection"></i>
           <div class="text-truncate" data-i18n="Basic">Yearly Leave Status</div>
         </router-link>
@@ -123,189 +123,17 @@ import {RouterLink} from "vue-router";
         </router-link>
       </li>
 
-      <!-- User interface -->
+<!--      Department report-->
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Department Management</span></li>
+      <!-- Cards -->
       <li class="menu-item">
-        <a href="javascript:void(0)" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-box"></i>
-          <div class="text-truncate" data-i18n="User interface">User interface</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="ui-accordion.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Accordion">Accordion</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-alerts.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Alerts">Alerts</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-badges.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Badges">Badges</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-buttons.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Buttons">Buttons</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-carousel.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Carousel">Carousel</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-collapse.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Collapse">Collapse</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-dropdowns.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Dropdowns">Dropdowns</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-footer.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Footer">Footer</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-list-groups.html" class="menu-link">
-              <div class="text-truncate" data-i18n="List Groups">List groups</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-modals.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Modals">Modals</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-navbar.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Navbar">Navbar</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-offcanvas.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Offcanvas">Offcanvas</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-pagination-breadcrumbs.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Pagination & Breadcrumbs">Pagination &amp; Breadcrumbs</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-progress.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Progress">Progress</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-spinners.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Spinners">Spinners</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-tabs-pills.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Tabs & Pills">Tabs &amp; Pills</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-toasts.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Toasts">Toasts</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-tooltips-popovers.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Tooltips & Popovers">Tooltips &amp; Popovers</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-typography.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Typography">Typography</div>
-            </a>
-          </li>
-        </ul>
+        <router-link to="/department-list" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-collection"></i>
+          <div class="text-truncate" data-i18n="Basic">Department List</div>
+        </router-link>
       </li>
 
-      <!-- Extended components -->
-      <li class="menu-item">
-        <a href="javascript:void(0)" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-copy"></i>
-          <div class="text-truncate" data-i18n="Extended UI">Extended UI</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Perfect Scrollbar">Perfect Scrollbar</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="extended-ui-text-divider.html" class="menu-link">
-              <div class="text-truncate" data-i18n="Text Divider">Text Divider</div>
-            </a>
-          </li>
-        </ul>
-      </li>
 
-      <li class="menu-item">
-        <a href="icons-boxicons.html" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-crown"></i>
-          <div class="text-truncate" data-i18n="Boxicons">Boxicons</div>
-        </a>
-      </li>
-
-      <!-- Forms & Tables -->
-
-      <!-- Form Validation -->
-      <li class="menu-item">
-        <a
-          href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/form-validation.html"
-          target="_blank"
-          class="menu-link">
-          <i class="menu-icon tf-icons bx bx-list-check"></i>
-          <div class="text-truncate" data-i18n="Form Validation">Form Validation</div>
-          <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>
-        </a>
-      </li>
-      <!-- Tables -->
-      <li class="menu-item">
-        <a href="tables-basic.html" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-table"></i>
-          <div class="text-truncate" data-i18n="Tables">Tables</div>
-        </a>
-      </li>
-      <!-- Data Tables -->
-      <li class="menu-item">
-        <a
-          href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/tables-datatables-basic.html"
-          target="_blank"
-          class="menu-link">
-          <i class="menu-icon tf-icons bx bx-grid"></i>
-          <div class="text-truncate" data-i18n="Datatables">Datatables</div>
-          <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>
-        </a>
-      </li>
-      <!-- Misc -->
-      <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
-      <li class="menu-item">
-        <a
-          href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-          target="_blank"
-          class="menu-link">
-          <i class="menu-icon tf-icons bx bx-support"></i>
-          <div class="text-truncate" data-i18n="Support">Support</div>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a
-          href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
-          target="_blank"
-          class="menu-link">
-          <i class="menu-icon tf-icons bx bx-file"></i>
-          <div class="text-truncate" data-i18n="Documentation">Documentation</div>
-        </a>
-      </li>
     </ul>
   </aside>
 </template>
