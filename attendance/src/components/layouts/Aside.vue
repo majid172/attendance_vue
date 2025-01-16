@@ -79,14 +79,14 @@ import {RouterLink} from "vue-router";
       <!-- Cards -->
       <li class="menu-item">
         <router-link to="/employee-list" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-collection"></i>
+          <i class="menu-icon tf-icons bx bx-user"></i>
           <div class="text-truncate" data-i18n="Basic">Employee List</div>
         </router-link>
       </li>
       <li class="menu-item">
         <a href="cards-basic.html" class="menu-link">
           <i class="menu-icon tf-icons bx bx-collection"></i>
-          <div class="text-truncate" data-i18n="Basic">Departments and Roles</div>
+          <div class="text-truncate" data-i18n="Basic">Holiday</div>
         </a>
       </li>
 
@@ -95,7 +95,7 @@ import {RouterLink} from "vue-router";
       <!-- Cards -->
       <li class="menu-item">
         <router-link to="/daily-report" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-collection"></i>
+          <i class="menu-icon tf-icons bx bx-calendar-event"></i>
           <div class="text-truncate" data-i18n="Basic">Daily Report</div>
         </router-link>
       </li>
@@ -112,13 +112,13 @@ import {RouterLink} from "vue-router";
       <!-- Cards -->
       <li class="menu-item">
         <router-link to="/yearly-leave" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-collection"></i>
+          <i class="menu-icon tf-icons bx bx-calendar"></i>
           <div class="text-truncate" data-i18n="Basic">Yearly Leave Status</div>
         </router-link>
       </li>
       <li class="menu-item">
         <router-link to="/leave-list" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-collection"></i>
+          <i class="menu-icon tf-icons bx bx-calendar-check"></i>
           <div class="text-truncate" data-i18n="Basic">Leave Report</div>
         </router-link>
       </li>
@@ -128,7 +128,7 @@ import {RouterLink} from "vue-router";
       <!-- Cards -->
       <li class="menu-item">
         <router-link to="/department-list" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-collection"></i>
+          <i class="menu-icon tf-icons bx bx-sitemap"></i>
           <div class="text-truncate" data-i18n="Basic">Department List</div>
         </router-link>
       </li>

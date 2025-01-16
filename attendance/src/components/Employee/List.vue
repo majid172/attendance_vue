@@ -1,3 +1,33 @@
+<script setup>
+import { useEmployeeStore } from '@/stores/employee';
+import {computed, onMounted, ref} from "vue";
+import Pagination from "@/components/Pagination.vue";
+const employeeStore = useEmployeeStore();
+const currentPage = ref(1); // Current page starts at 1
+const itemsPerPage = 10; // Items per page
+
+// Computed pagination result
+const pagination = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return employeeStore.employees.slice(start, end);
+});
+
+// Compute total pages based on the department list
+const totalPages = computed(() => Math.ceil(employeeStore.employees.length / itemsPerPage));
+
+// Navigate to a specific page
+const changePage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page;
+  }
+};
+
+
+onMounted(()=>{
+  employeeStore.fetchList()
+})
+</script>
 <template>
   <div class="container-xxl flex-grow-1 container-p-y">
     <div class="card">
@@ -85,7 +115,8 @@
         <table class="table">
           <thead>
           <tr>
-            <th>Emp Id</th>
+            <th>SL</th>
+<!--            <th>Emp Id</th>-->
             <th>Name</th>
             <th>Department</th>
             <th>Designation</th>
@@ -95,13 +126,13 @@
           </tr>
           </thead>
           <tbody class="table-border-bottom-0">
-          <tr>
-            <td><i class="bx bxl-angular bx-md text-danger me-4"></i> <span>Angular Project</span></td>
-            <td>Albert Cook</td>
-            <td> IT </td>
-            <td>Software Engineer</td>
-            <td>+8801969-362422</td>
-            <td><span class="badge bg-label-primary me-1">Active</span></td>
+          <tr v-for="(item,index) in pagination">
+            <td>{{ (currentPage -1) * itemsPerPage +index+1  }}</td>
+            <td>{{ item.full_name }}</td>
+            <td> {{ item.name }} </td>
+            <td>{{ item.designation }}</td>
+            <td>{{ item.phone }}</td>
+            <td><span class="badge bg-label-primary me-1">{{ item.status }}</span></td>
             <td>
               <div class="dropdown">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -114,69 +145,19 @@
               </div>
             </td>
           </tr>
-          <tr>
-            <td><i class="bx bxl-react bx-md text-info me-4"></i> <span>React Project</span></td>
-            <td>Barry Hunter</td>
-            <td> IT </td>
-            <td>Software Engineer</td>
-            <td>+8801969-362422</td>
-            <td><span class="badge bg-label-success me-1">Completed</span></td>
-            <td>
-              <div class="dropdown">
-                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td><i class="bx bxl-vuejs bx-md text-success me-4"></i> <span>VueJs Project</span></td>
-            <td>Trevor Baker</td>
-            <td> IT </td>
-            <td>Software Engineer</td>
-            <td>+8801969-362422</td>
-            <td><span class="badge bg-label-info me-1">Scheduled</span></td>
-            <td>
-              <div class="dropdown">
-                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td><i class="bx bxl-bootstrap bx-md text-primary me-4"></i> <span>Bootstrap Project</span></td>
-            <td>Jerry Milton</td>
-            <td> IT </td>
-            <td>Software Engineer</td>
-            <td>+8801969-362422</td>
-            <td><span class="badge bg-label-warning me-1">Pending</span></td>
-            <td>
-              <div class="dropdown">
-                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>
-                </div>
-              </div>
-            </td>
-          </tr>
+
           </tbody>
         </table>
       </div>
+      <div class="card-footer d-flex justify-content-end">
+        <!-- Pagination Component with event handling -->
+        <Pagination
+          :currentPage="currentPage"
+          :totalPages="totalPages"
+          @changePage="changePage"
+        />
+      </div>
     </div>
   </div>
-
 </template>
-<script setup lang="ts">
-</script>
+

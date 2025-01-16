@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import Pagination from "@/components/Pagination.vue";
+</script>
 <template>
   <div class="container-xxl flex-grow-1 container-p-y">
     <div class="d-flex justify-content-end mb-3">
@@ -128,6 +130,9 @@
 
           </tbody>
         </table>
+      </div>
+      <div class="card-footer d-flex justify-content-end">
+        <Pagination/>
       </div>
     </div>
   </div>
