@@ -84,10 +84,10 @@ import {RouterLink} from "vue-router";
         </router-link>
       </li>
       <li class="menu-item">
-        <a href="cards-basic.html" class="menu-link">
+        <router-link to="/holidays" class="menu-link">
           <i class="menu-icon tf-icons bx bx-collection"></i>
           <div class="text-truncate" data-i18n="Basic">Holiday</div>
-        </a>
+        </router-link>
       </li>
 
 <!--      attendance-->

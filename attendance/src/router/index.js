@@ -5,6 +5,7 @@ import DailyReportView from "@/views/Attendance/DailyReportView.vue";
 import LeaveListView from "@/views/Leave/ListView.vue";
 import YearlyStatusView from "@/views/Leave/YearlyStatusView.vue";
 import DepartmentListView from "@/views/Department/DepartmentListView.vue";
+import HolidayListView from "@/views/Holiday/ListView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +46,12 @@ const router = createRouter({
       path: '/department-list',
       name: "departmentList",
       component: DepartmentListView
+    },
+  //   holiday
+    {
+      path: '/holidays',
+      name: "holidays",
+      component: HolidayListView
     }
   ],
 })

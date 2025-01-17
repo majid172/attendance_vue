@@ -39,7 +39,7 @@ onMounted(() => {
 
       <div class="table-responsive text-nowrap">
         <table class="table">
-          <thead>
+          <thead class="table-light">
           <tr>
             <th>SL.</th>
             <th>Department</th>

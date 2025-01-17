@@ -77,6 +77,9 @@ onMounted(()=>{
           </tr>
           </thead>
           <tbody class="table-border-bottom-0">
+          <tr v-if="attendanceStore.attendances.length === 0">
+            <td colspan="7" class="text-center">No data available</td>
+          </tr>
           <tr v-for="item in attendanceStore.attendances">
             <td><i class="bx bxl-angular bx-md text-danger me-4"></i> <span>Angular Project</span></td>
             <td>Albert Cook</td>

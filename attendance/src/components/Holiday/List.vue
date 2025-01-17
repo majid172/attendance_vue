@@ -1,10 +1,26 @@
 <script setup>
+import {ref, onMounted, computed} from "vue";
+import {useHolidayStore} from "@/stores/holiday.js";
 import Pagination from "@/components/Pagination.vue";
-import {useLeaveStore} from "@/stores/leave.js";
-import {onMounted} from "vue";
-const leaveStore = useLeaveStore();
+const holidayStore = useHolidayStore();
+const currentPage = ref(1);
+const itemPerPage = 10;
+const paginate = computed(()=>{
+  const  start = (currentPage.value -1)*itemPerPage;
+  const end = start+itemPerPage;
+  return holidayStore.holidays.slice(start,end);
+})
+const totalPages = computed(() => Math.ceil(holidayStore.holidays.length / itemPerPage));
+
+// Navigate to a specific page
+const changePage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page;
+  }
+};
+
 onMounted(()=>{
-  leaveStore.list();
+  holidayStore.list()
 })
 </script>
 <template>
@@ -17,14 +33,14 @@ onMounted(()=>{
         class="btn btn-primary"
         data-bs-toggle="modal"
         data-bs-target="#modalCenter">
-        Request Date
+        Add Holiday
       </button>
       <!-- Modal -->
       <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="modalCenterTitle">Leave Report</h5>
+              <h5 class="modal-title" id="modalCenterTitle">Daily Report</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -37,7 +53,7 @@ onMounted(()=>{
                   <label class="form-label" for="defaultSelect">Select Date</label>
                   <select id="defaultSelect" class="form-select">
                     <option>Default select</option>
-                    <option value="1">One</option>
+                    <option value="1"> One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
                   </select>
@@ -59,34 +75,23 @@ onMounted(()=>{
       <!--          <router-link to="/create-employee" class="btn btn-primary">Add Employee</router-link>-->
     </div>
     <div class="card">
-      <div class="card-header ">
-        <h5 >Leave List</h5>
-      </div>
-
+      <h5 class="card-header">Holidays</h5>
       <div class="table-responsive text-nowrap">
         <table class="table">
           <thead class="table-light">
           <tr>
-            <th>Emp Id</th>
-            <th>Name</th>
-            <th>Department</th>
+            <th>SL</th>
             <th>Date</th>
-            <th>Leave Type</th>
+            <th>Type</th>
             <th>Actions</th>
           </tr>
           </thead>
           <tbody class="table-border-bottom-0">
-          <tr v-for="(item,index) in leaveStore.leaves">
-            <td>{{ index+1 }}</td>
-            <td>{{ item.full_name }}</td>
-            <td> {{ item.name }} </td>
-            <td>{{item.leave_date}}</td>
+          <tr v-for="(item,index) in paginate">
+            <td>{{ (currentPage -1) * itemPerPage +index+1  }}</td>
+            <td>{{item.holiday_date}}</td>
+            <td>{{item.holiday_name}}</td>
 
-            <td>
-              <span class="badge bg-label-primary me-1" v-if="item.leave_type == 'sick'">{{ item.leave_type.toUpperCase() }}</span>
-              <span class="badge bg-label-danger me-1" v-if="item.leave_type == 'casual'">{{ item.leave_type.toUpperCase() }}</span>
-
-            </td>
             <td>
               <div class="dropdown">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -104,9 +109,13 @@ onMounted(()=>{
         </table>
       </div>
       <div class="card-footer d-flex justify-content-end">
-        <Pagination/>
+        <!-- Pagination Component with event handling -->
+        <Pagination
+          :currentPage="currentPage"
+          :totalPages="totalPages"
+          @changePage="changePage"
+        />
       </div>
     </div>
   </div>
-
 </template>
