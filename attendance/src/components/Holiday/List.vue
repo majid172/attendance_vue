@@ -2,6 +2,9 @@
 import {ref, onMounted, computed} from "vue";
 import {useHolidayStore} from "@/stores/holiday.js";
 import Pagination from "@/components/Pagination.vue";
+import InputField from "@/components/InputField.vue";
+import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.css";
 const holidayStore = useHolidayStore();
 const currentPage = ref(1);
 const itemPerPage = 10;
@@ -19,7 +22,19 @@ const changePage = (page) => {
   }
 };
 
+const addHoliday = async () => {
+  holidayStore.createHoliday();
+}
+const removeHoliday = async (id) =>{
+  holidayStore.remove(id);
+}
+
 onMounted(()=>{
+  flatpickr("#date", {
+    dateFormat: "Y-m-d",
+    maxDate: "today",
+  });
+
   holidayStore.list()
 })
 </script>
@@ -40,31 +55,27 @@ onMounted(()=>{
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="modalCenterTitle">Daily Report</h5>
+              <h5 class="modal-title" id="modalCenterTitle">Create New Holiday</h5>
               <button
                 type="button"
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"></button>
             </div>
-            <form>
+            <form @submit.prevent="addHoliday">
               <div class="modal-body">
                 <div class="mb-6">
-                  <label class="form-label" for="defaultSelect">Select Date</label>
-                  <select id="defaultSelect" class="form-select">
-                    <option>Default select</option>
-                    <option value="1"> One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
+                  <InputField label="Holiday Name" v-model="holidayStore.inputField.holiday_name" placeholder="Enter holiday name"/>
                 </div>
-
+                <div class="mb-6">
+                  <InputField type="text" id="date" label="Holiday Date" v-model="holidayStore.inputField.holiday_date" placeholder="Enter holiday date"/>
+                </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">Create</button>
               </div>
             </form>
           </div>
@@ -99,7 +110,7 @@ onMounted(()=>{
                 </button>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                  <a class="dropdown-item" href="javascript:void(0);" @click="removeHoliday(item.id)"><i class="bx bx-trash me-1"></i> Delete</a>
                 </div>
               </div>
             </td>

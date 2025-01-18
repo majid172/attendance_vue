@@ -3,9 +3,10 @@ import { ref, watch } from "vue";
 
 const props = defineProps({
   label: { type: String, required: true },
-  modelValue: { type: [String, Number], required: true },
+  modelValue: { type: [String, Number,Date], required: true },
   placeholder: { type: String, default: "" },
   type: { type: String, default: "text" },
+  id: {type:String},
   icon: { type: String, default: "" }, // Optional icon class
 });
 
@@ -27,7 +28,7 @@ watch(inputValue, (newValue) => {
     <input
       :type="type"
       class="form-control"
-      :id="label"
+      :id="id"
       :placeholder="placeholder"
       v-model="inputValue"
       :aria-label="placeholder"

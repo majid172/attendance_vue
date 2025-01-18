@@ -36,26 +36,36 @@ class HolidayController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $request->validate([
-            'holiday_name' => 'required|string|max:255',
-            'holiday_date' => 'required|date',
-        ], [
-            'holiday_name.unique' => 'The holiday name you entered already exists.',
-        ]);
+        // Validate the request
+//        $validated = $request->validate([
+//            'holiday_name' => 'required|string|max:255',
+//            'holiday_date' => 'required|date',
+//        ], [
+//            'holiday_name.unique' => 'The holiday name you entered already exists.',
+//        ]);
 
         try {
-            Holiday::create($request->all());
+            // Create the holiday record in the database
+            DB::table('holidays')->insert($request->all());
 
-            return redirect()->route('holidays.index')->with('success', 'Holiday created successfully.');
+            // Return a success response
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Holiday created successfully.',
+                'data' => $request->all()
+            ], 201); // 201 = Created
         } catch (\Exception $e) {
-            return redirect()->route('holidays.index')->with('error', 'Failed to create holiday.');
+            // Return an error response
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to create holiday.',
+                'error' => $e->getMessage(),
+            ], 500); // 500 = Internal Server Error
         }
     }
+
 
     /**
      * Display the specified resource.
@@ -101,8 +111,8 @@ class HolidayController extends Controller
         try {
             $holiday = DB::table('holidays')->where('id',$id);
             $holiday->delete();
-
-            return redirect()->route('holidays.index')->with('success', 'Holiday deleted successfully.');
+            return 'Holiday deleted successfully';
+//            return redirect()->route('holidays.index')->with('success', 'Holiday deleted successfully.');
         } catch (\Exception $e) {
             return redirect()->route('holidays.index')->with('error', 'Failed to delete holiday.');
         }

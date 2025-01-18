@@ -2,9 +2,16 @@
 import {onMounted} from "vue";
 import Pagination from "@/components/Pagination.vue";
 import {useAttendanceStore} from "@/stores/attendance.js";
+import InputField from "@/components/InputField.vue";
+
 const attendanceStore = useAttendanceStore();
+
+const requestForm = async ()=>{
+  attendanceStore.filterList()
+}
 onMounted(()=>{
   attendanceStore.list()
+  // attendanceStore.filterList()
 })
 </script>
 <template>
@@ -31,16 +38,10 @@ onMounted(()=>{
                 data-bs-dismiss="modal"
                 aria-label="Close"></button>
             </div>
-            <form>
+            <form @submit.prevent="requestForm">
               <div class="modal-body">
                 <div class="mb-6">
-                  <label class="form-label" for="defaultSelect">Select Date</label>
-                  <select id="defaultSelect" class="form-select">
-                    <option>Default select</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
+                  <InputField label="Select Date" type="date" v-model="attendanceStore.inputField.date"/>
                 </div>
 
               </div>
@@ -48,28 +49,28 @@ onMounted(()=>{
                 <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">Save</button>
               </div>
             </form>
           </div>
         </div>
       </div>
 
-
-      <!--          <router-link to="/create-employee" class="btn btn-primary">Add Employee</router-link>-->
     </div>
-    <div class="card">
+    <div class="card mb-4" v-for="(attendance,index) in attendanceStore.attendances">
       <div class="card-header ">
-        <h5 >Daily Attendance</h5>
+        <h5>{{ index }} Attendance
+          <span v-if="!attendanceStore.inputField.date">({{ attendanceStore.inputField.date }})</span>
+          <span v-else>(Today)</span></h5>
       </div>
 
-      <div class="table-responsive text-nowrap">
-        <table class="table">
-          <thead>
+      <div class="table-responsive text-nowrap" >
+        <table class="table" >
+          <thead class="table-light">
           <tr>
-            <th>Emp Id</th>
+            <th>SL.</th>
             <th>Name</th>
-            <th>Department</th>
+            <th>Employee ID</th>
             <th>Check-In Time</th>
             <th>Check-Out Time</th>
             <th>Status</th>
@@ -77,16 +78,19 @@ onMounted(()=>{
           </tr>
           </thead>
           <tbody class="table-border-bottom-0">
-          <tr v-if="attendanceStore.attendances.length === 0">
+          <tr v-if="attendances.length === 0">
             <td colspan="7" class="text-center">No data available</td>
           </tr>
-          <tr v-for="item in attendanceStore.attendances">
-            <td><i class="bx bxl-angular bx-md text-danger me-4"></i> <span>Angular Project</span></td>
-            <td>Albert Cook</td>
-            <td> IT </td>
-            <td>Software Engineer</td>
-            <td>+8801969-362422</td>
-            <td><span class="badge bg-label-primary me-1">Active</span></td>
+          <tr v-for="(item,sl) in attendance">
+            <td>{{sl+1}}</td>
+            <td>{{item.employee_name}} </td>
+            <td><span class="badge bg-label-warning me-1">{{item.employee_id}}</span>  </td>
+            <td>{{item.check_in_time}}</td>
+            <td>{{item.check_out_time}}</td>
+            <td>
+              <span class="badge bg-label-success me-1" v-if="item.status == 'present'">{{ item.status }}</span>
+              <span class="badge bg-label-danger me-1" v-if="item.status == 'absent'">{{ item.status }}</span>
+            </td>
             <td>
               <div class="dropdown">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

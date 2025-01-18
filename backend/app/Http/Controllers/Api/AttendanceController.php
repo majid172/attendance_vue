@@ -14,20 +14,24 @@ class AttendanceController extends Controller
     public function index()
     {
         $today = date('Y-m-d');
-        $attedance = DB::table('attendances')->whereDate('attendances.attendance_date', $today)
-            ->join('employees','attendances.employee_id','=','employees.id')
-            ->join('departments','employees.department_id','=','departments.id')
+        $attendances = DB::table('attendances')
+            ->join('employees', 'attendances.employee_id', '=', 'employees.id')
+            ->join('departments', 'employees.department_id', '=', 'departments.id')
+            ->whereDate('attendances.attendance_date', $today)
             ->select(
-                'employees.department_id',
                 'departments.name as department_name',
                 'employees.full_name as employee_name',
                 'attendances.check_in_time',
                 'attendances.check_out_time',
                 'attendances.status',
-
+                'attendances.employee_id as employee_id',
+                'employees.department_id'
             )
-            ->get()->groupBy('department_name');
-        return $attedance;
+            ->orderBy('employees.department_id')
+            ->get()
+            ->groupBy('department_name');
+
+        return $attendances;
 //        return response()->json($attedance);
     }
 
@@ -54,6 +58,7 @@ class AttendanceController extends Controller
                 'attendances.check_in_time',
                 'attendances.check_out_time',
                 'attendances.status',
+                'attendances.employee_id as employee_id',
                 'employees.department_id'
             )
             ->orderBy('employees.department_id')

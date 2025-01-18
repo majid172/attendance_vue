@@ -3,6 +3,7 @@ import { useEmployeeStore } from '@/stores/employee';
 import {computed, onMounted, ref} from "vue";
 import Pagination from "@/components/Pagination.vue";
 import InputField from "@/components/InputField.vue";
+import SelectField from "@/components/SelectField.vue";
 const employeeStore = useEmployeeStore();
 const currentPage = ref(1); // Current page starts at 1
 const itemsPerPage = 10; // Items per page
@@ -62,17 +63,19 @@ onMounted(()=>{
                           icon="bx bx-user"
                           v-model="fullname"
                         />
-
-
                       </div>
                       <div class="mb-6 text-left">
-                        <InputField
+                        <SelectField
                           label="Department"
-                          placeholder="Enter employee department"
                           icon="bx bx-buildings"
-                          v-model="deparment"
-                        />
+                          v-model="department"
+                          :options="[
+                            { label: 'Default select', value: '' },
+                            { label: 'IT', value: '1' },
+                            { label: 'Accounts', value: '2' },
 
+                          ]"
+                        />
                       </div>
                       <div class="mb-6">
                         <InputField
@@ -91,16 +94,17 @@ onMounted(()=>{
                         />
                       </div>
                       <div class="mb-6">
-                        <label class="form-label" for="basic-icon-default-message">Message</label>
-                        <div class="input-group input-group-merge">
-                          <span id="basic-icon-default-message2" class="input-group-text"><i class="bx bx-comment"></i></span>
-                          <select id="defaultSelect" class="form-select">
-                            <option>Default select</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                          </select>
-                        </div>
+                        <SelectField
+                          label="Status"
+                          icon="bx bx-comment"
+                          v-model="status"
+                          :options="[
+                            { label: 'Default select', value: '' },
+                            { label: 'Active', value: '1' },
+                            { label: 'Deactive', value: '2' },
+
+                          ]"
+                        />
                       </div>
 
                   </div>
@@ -114,9 +118,6 @@ onMounted(()=>{
                 </div>
               </div>
             </div>
-
-
-<!--          <router-link to="/create-employee" class="btn btn-primary">Add Employee</router-link>-->
         </div>
       </div>
 
@@ -125,7 +126,6 @@ onMounted(()=>{
           <thead class="table-light">
           <tr>
             <th>SL</th>
-<!--            <th>Emp Id</th>-->
             <th>Name</th>
             <th>Department</th>
             <th>Designation</th>
