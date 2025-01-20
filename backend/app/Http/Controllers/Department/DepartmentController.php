@@ -52,7 +52,24 @@ class DepartmentController extends Controller
 
     public function update(Request $request, string $id)
     {
-        //
+//        $request->validate([
+//            'dep_name' => 'required|string|max:255',
+//        ]);
+        $department = DB::table('departments')->where('id', $id)->first();
+        if (!$department) {
+            return response()->json(['message' => 'Department not found.'], 404);
+        }
+        DB::table('departments')
+            ->where('id', $id)
+            ->update(['name' => $request->dep_name]);
+
+        $updatedDepartment = DB::table('departments')->where('id', $id)->first();
+
+        return response()->json([
+            'department' => $updatedDepartment,
+            'status' => 'success',
+            'message' => 'Department updated successfully.',
+        ]);
     }
 
     /**

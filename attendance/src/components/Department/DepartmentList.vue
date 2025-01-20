@@ -29,6 +29,19 @@ const changePage = (page) => {
 const editDept = (id)=>{
    departmentStore.edit(id);
 }
+
+const updateDept = async () => {
+  try {
+     departmentStore.update();
+    const modalElement = document.getElementById("modalCenter");
+    const modal = new bootstrap.Modal(modalElement);
+    modal.hide();
+
+  } catch (error) {
+    console.error("Error updating department:", error);
+  }
+};
+
 const removeDept = (id)=>{
   departmentStore.remove(id);
 }
@@ -73,6 +86,7 @@ onMounted(() => {
 <!--                <input type="text" v-model="departmentStore.inputField.dep_name">-->
               </div>
             </td>
+
           </tr>
 
           <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
@@ -86,7 +100,7 @@ onMounted(() => {
                     data-bs-dismiss="modal"
                     aria-label="Close"></button>
                 </div>
-                <form>
+                <form @submit.prevent="updateDept()">
                   <div class="modal-body">
                     <div class="mb-6">
                       <InputField label="Department Name" type="text" id="Department" v-model="departmentStore.inputField.dep_name" placeholder="Enter department name" />
@@ -97,7 +111,7 @@ onMounted(() => {
                     <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
                       Close
                     </button>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit"  class="btn btn-primary">Update</button>
                   </div>
                 </form>
               </div>
