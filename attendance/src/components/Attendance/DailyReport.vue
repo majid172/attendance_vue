@@ -10,7 +10,11 @@ const requestForm = async ()=>{
   attendanceStore.filterList()
 }
 onMounted(()=>{
-  attendanceStore.list()
+  flatpickr("#date", {
+    dateFormat: "Y-m-d",
+    maxDate: "today",
+  });
+  attendanceStore.list();
   // attendanceStore.filterList()
 })
 </script>
@@ -41,7 +45,7 @@ onMounted(()=>{
             <form @submit.prevent="requestForm">
               <div class="modal-body">
                 <div class="mb-6">
-                  <InputField label="Select Date" type="date" v-model="attendanceStore.inputField.date"/>
+                  <InputField label="Select Date" type="text" id="date" v-model="attendanceStore.inputField.date"/>
                 </div>
 
               </div>
@@ -49,7 +53,7 @@ onMounted(()=>{
                 <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>
           </div>
@@ -78,9 +82,9 @@ onMounted(()=>{
           </tr>
           </thead>
           <tbody class="table-border-bottom-0">
-          <tr v-if="attendances.length === 0">
-            <td colspan="7" class="text-center">No data available</td>
-          </tr>
+<!--          <tr v-if="attendances.length == 0">-->
+<!--            <td colspan="7" class="text-center">No data available</td>-->
+<!--          </tr>-->
           <tr v-for="(item,sl) in attendance">
             <td>{{sl+1}}</td>
             <td>{{item.employee_name}} </td>

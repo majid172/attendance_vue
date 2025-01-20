@@ -3,8 +3,7 @@ import {ref, onMounted, computed} from "vue";
 import {useHolidayStore} from "@/stores/holiday.js";
 import Pagination from "@/components/Pagination.vue";
 import InputField from "@/components/InputField.vue";
-import flatpickr from "flatpickr";
-import "flatpickr/dist/flatpickr.css";
+
 const holidayStore = useHolidayStore();
 const currentPage = ref(1);
 const itemPerPage = 10;
@@ -23,7 +22,12 @@ const changePage = (page) => {
 };
 
 const addHoliday = async () => {
+
+  const modalElement = document.getElementById("modalCenter");
+  const modalInstance = bootstrap.Modal.getInstance(modalElement); // Retrieve the modal instance
+  modalInstance.hide();
   holidayStore.createHoliday();
+
 }
 const removeHoliday = async (id) =>{
   holidayStore.remove(id);

@@ -13,7 +13,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = DB::table('employees')->join('departments','employees.department_id','=','departments.id')->get();
+        $employees = DB::table('employees')->join('departments','employees.department_id','=','departments.id')
+            ->select('employees.*','departments.name')
+            ->get();
         return $employees;
     }
 
@@ -46,7 +48,8 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $employee = DB::table('employees')->where('id',$id)->first();
+        return $employee;
     }
 
     /**

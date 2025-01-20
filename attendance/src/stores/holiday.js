@@ -17,6 +17,7 @@ export const useHolidayStore = defineStore('holiday',{
       console.log(this.inputField);
       const {data} = await axios.post('/holidays',this.inputField);
       this.holidays.push(data);
+      this.list();
       this.inputField.holiday_name = null;
       this.inputField.holiday_date = null;
     },

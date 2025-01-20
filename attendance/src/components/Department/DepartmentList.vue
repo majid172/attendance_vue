@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useDepartmentStore } from "@/stores/department.js";
 import Pagination from "@/components/Pagination.vue";
+import InputField from "@/components/InputField.vue";
 
 const departmentStore = useDepartmentStore();
 const currentPage = ref(1); // Current page starts at 1
@@ -24,6 +25,13 @@ const changePage = (page) => {
   }
 };
 
+// edit
+const editDept = (id)=>{
+   departmentStore.edit(id);
+}
+const removeDept = (id)=>{
+  departmentStore.remove(id);
+}
 // Fetch data on component mount
 onMounted(() => {
   departmentStore.list(); // This should populate departmentStore.departments
@@ -58,14 +66,46 @@ onMounted(() => {
                   <i class="bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                  <a class="dropdown-item" @click="editDept(item.id)" href="javascript:void(0);" data-bs-toggle="modal"
+                     data-bs-target="#modalCenter"><i class="bx bx-edit-alt me-1" ></i> Edit</a>
+                  <a class="dropdown-item" href="javascript:void(0);" @click="removeDept(item.id)"><i class="bx bx-trash me-1"></i> Delete</a>
                 </div>
+<!--                <input type="text" v-model="departmentStore.inputField.dep_name">-->
               </div>
             </td>
           </tr>
+
+          <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalCenterTitle">Edit Department</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                </div>
+                <form>
+                  <div class="modal-body">
+                    <div class="mb-6">
+                      <InputField label="Department Name" type="text" id="Department" v-model="departmentStore.inputField.dep_name" placeholder="Enter department name" />
+                    </div>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
+                      Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
           </tbody>
         </table>
+
       </div>
 
       <div class="card-footer d-flex justify-content-end">

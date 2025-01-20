@@ -4,7 +4,9 @@ import {computed, onMounted, ref} from "vue";
 import Pagination from "@/components/Pagination.vue";
 import InputField from "@/components/InputField.vue";
 import SelectField from "@/components/SelectField.vue";
+import {useDepartmentStore} from "@/stores/department.js";
 const employeeStore = useEmployeeStore();
+const departmentStore = useDepartmentStore();
 const currentPage = ref(1); // Current page starts at 1
 const itemsPerPage = 10; // Items per page
 
@@ -17,8 +19,12 @@ const pagination = computed(() => {
 
 // Compute total pages based on the department list
 const totalPages = computed(() => Math.ceil(employeeStore.employees.length / itemsPerPage));
-
+const displayKey = ref('name');
 // Navigate to a specific page
+
+const editEmp = (id) =>{
+    employeeStore.editEmployee(id);
+}
 const changePage = (page) => {
   if (page >= 1 && page <= totalPages.value) {
     currentPage.value = page;
@@ -26,6 +32,7 @@ const changePage = (page) => {
 };
 onMounted(()=>{
   employeeStore.fetchList()
+  departmentStore.list();
 })
 </script>
 <template>
@@ -33,92 +40,7 @@ onMounted(()=>{
     <div class="card">
       <div class="card-header d-inline-flex justify-content-between">
         <h5 >Employee List</h5>
-        <div class="">
-            <!-- Button trigger modal -->
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#modalCenter">
-              Add Employee
-            </button>
-            <!-- Modal -->
-            <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="modalCenterTitle">Add New Employee</h5>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"></button>
-                  </div>
-                  <form>
-                  <div class="modal-body">
-                      <div class="mb-6">
-                        <InputField
-                          label="Employee Name"
-                          placeholder="Enter employee name"
-                          icon="bx bx-user"
-                          v-model="fullname"
-                        />
-                      </div>
-                      <div class="mb-6 text-left">
-                        <SelectField
-                          label="Department"
-                          icon="bx bx-buildings"
-                          v-model="department"
-                          :options="[
-                            { label: 'Default select', value: '' },
-                            { label: 'IT', value: '1' },
-                            { label: 'Accounts', value: '2' },
 
-                          ]"
-                        />
-                      </div>
-                      <div class="mb-6">
-                        <InputField
-                          label="Designation"
-                          placeholder="Enter employee designation"
-                          icon="bx bx-buildings"
-                          v-model="designation"
-                        />
-                      </div>
-                      <div class="mb-6">
-                        <InputField
-                          label="Phone"
-                          placeholder="Enter employee phone"
-                          icon="bx bx-phone"
-                          v-model="phone"
-                        />
-                      </div>
-                      <div class="mb-6">
-                        <SelectField
-                          label="Status"
-                          icon="bx bx-comment"
-                          v-model="status"
-                          :options="[
-                            { label: 'Default select', value: '' },
-                            { label: 'Active', value: '1' },
-                            { label: 'Deactive', value: '2' },
-
-                          ]"
-                        />
-                      </div>
-
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
-                      Close
-                    </button>
-                    <button type="button" class="btn btn-primary">Save</button>
-                  </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-        </div>
       </div>
 
       <div class="table-responsive text-nowrap">
@@ -148,60 +70,83 @@ onMounted(()=>{
                   <i class="bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0);"
+                  <a class="dropdown-item" href="javascript:void(0);" @click="editEmp(item.id)"
                      data-bs-toggle="modal"
-                     data-bs-target="#modalCenter"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                     :data-bs-target="'#modalCenter_' + item.id"><i class="bx bx-edit-alt me-1"></i> Edit</a>
                   <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
                 </div>
+
               </div>
             </td>
-          </tr>
-          <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="row">
-                    <div class="col mb-6">
-                      <label for="nameWithTitle" class="form-label">Name</label>
-                      <input
-                        type="text"
-                        id="nameWithTitle"
-                        class="form-control"
-                        placeholder="Enter Name" />
-                    </div>
+
+            <div class="modal fade" :id="'modalCenter_' + item.id" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalCenterTitle">Edit Employee</h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"></button>
                   </div>
-                  <div class="row g-6">
-                    <div class="col mb-0">
-                      <label for="emailWithTitle" class="form-label">Email</label>
-                      <input
-                        type="email"
-                        id="emailWithTitle"
-                        class="form-control"
-                        placeholder="xxxx@xxx.xx" />
+                  <form>
+                    <div class="modal-body">
+                      <div class="mb-6">
+                        <InputField
+                          label="Employee Name"
+                          placeholder="Enter employee fullname"
+                          icon="bx bx-user"
+                          v-model="employeeStore.inputField.full_name"
+                        />
+                      </div>
+                      <div class="mb-6">
+                        <InputField
+                          label="Email" type="email"
+                          placeholder="Enter employee email"
+                          icon="bx bx-envelope"
+                          v-model="employeeStore.inputField.email"
+                        />
+                      </div>
+
+                      <div class="mb-6 text-left">
+                        <SelectField
+                          label="Department"
+                          icon="bx bx-buildings"
+                          v-model="employeeStore.inputField.dep_name" :displayKey = "displayKey"
+                          :options="departmentStore.departments"
+                        />
+                      </div>
+                      <div class="mb-6">
+                        <InputField
+                          label="Designation"
+                          placeholder="Enter employee designation"
+                          icon="bx bx-buildings"
+                          v-model="employeeStore.inputField.emp_designation"
+                        />
+                      </div>
+                      <div class="mb-6">
+                        <InputField
+                          label="Phone"
+                          placeholder="Enter employee phone"
+                          icon="bx bx-phone"
+                          v-model="employeeStore.inputField.phone"
+                        />
+                      </div>
+
                     </div>
-                    <div class="col mb-0">
-                      <label for="dobWithTitle" class="form-label">DOB</label>
-                      <input type="date" id="dobWithTitle" class="form-control" />
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
+                        Close
+                      </button>
+                      <button type="button" class="btn btn-primary">Save</button>
                     </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                    Close
-                  </button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                  </form>
                 </div>
               </div>
             </div>
-          </div>
+          </tr>
+
 
           </tbody>
         </table>

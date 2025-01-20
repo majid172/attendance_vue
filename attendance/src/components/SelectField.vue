@@ -5,6 +5,7 @@ const props = defineProps({
   label: { type: String, required: true },
   modelValue: { type: [String, Number], required: true },
   options: { type: Array, required: true }, // Array of options
+  displayKey: { type: String, required: true },
   icon: { type: String, default: "" }, // Optional icon class
 });
 
@@ -32,8 +33,8 @@ watch(selectedValue, (newValue) => {
         :aria-label="label"
       >
         <option disabled value="">Select an option</option>
-        <option v-for="option in options" :key="option.value" :value="option.value">
-          {{ option.label }}
+        <option v-for="option in options" :key="option.id" :value="option.id">
+          {{ option[displayKey] }}
         </option>
       </select>
     </div>
