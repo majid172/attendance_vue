@@ -80,7 +80,8 @@ class HolidayController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $holiday = DB::table('holidays')->where('id', $id)->first();
+        return $holiday;
     }
 
     /**
@@ -88,19 +89,27 @@ class HolidayController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'holiday_name' => 'required|string|max:255',
-            'holiday_date' => 'required|date',
-        ]);
-
-        try {
-            $holiday = DB::table('holidays')->where('id',$id);
-            $holiday->update($request->all());
-
-            return redirect()->route('holidays.index')->with('success', 'Holiday updated successfully.');
-        } catch (\Exception $e) {
-            return redirect()->route('holidays.index')->with('error', 'Failed to update holiday.');
+//        $request->validate([
+//            'holiday_name' => 'required|string|max:255',
+//            'holiday_date' => 'required|date',
+//        ]);
+        $holiday = DB::table('holidays')->where('id', $id)->first();
+        if (!$holiday) {
+            return response()->json(['message' => 'Department not found.'], 404);
         }
+        DB::table('holidays')
+            ->where('id', $id)
+            ->update(['holiday_name' => $request->holiday_name,
+                       'holiday_date' => $request->holiday_date
+                ]);
+
+        $updatedHoliday = DB::table('holidays')->where('id', $id)->first();
+
+        return response()->json([
+            'holiday' => $updatedHoliday,
+            'status' => 'success',
+            'message' => 'Holiday updated successfully.',
+        ]);
     }
 
     /**

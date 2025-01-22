@@ -5,6 +5,7 @@ export const useEmployeeStore = defineStore('employeeStore',{
   state:()=>({
     employees:[],
     inputField:{
+      id: '',
       full_name: '',
       dep_name: null,
       emp_designation: null,
@@ -19,15 +20,18 @@ export const useEmployeeStore = defineStore('employeeStore',{
       this.employees = data;
     },
     async editEmployee(id){
-
       const {data} = await axios(`/employee/${id}/edit`);
+      this.inputField.id = data.id;
       this.inputField.full_name = data.full_name;
       this.inputField.email  = data.email;
       this.inputField.dep_name = data.name;
       this.inputField.emp_designation = data.designation;
       this.inputField.phone = data.phone;
+    },
+    async update(){
 
-      console.log(this.inputField);
+      const id = this.inputField.id;
+      const {data} = await axios.put(`/emplo`)
     }
   },
 });

@@ -29,6 +29,17 @@ const addHoliday = async () => {
   holidayStore.createHoliday();
 
 }
+const updateHoliday = async ()=>{
+
+  const modalElement = document.getElementById("modalCenterEdit");
+  const modalInstance = bootstrap.Modal.getInstance(modalElement);
+  const triggerButton = document.querySelector('[data-bs-target="#modalCenterEdit"]');
+  if (triggerButton) {
+    triggerButton.focus();
+  }
+  modalInstance.hide();
+  holidayStore.update();
+}
 const removeHoliday = async (id) =>{
   holidayStore.remove(id);
 }
@@ -86,8 +97,6 @@ onMounted(()=>{
         </div>
       </div>
 
-
-      <!--          <router-link to="/create-employee" class="btn btn-primary">Add Employee</router-link>-->
     </div>
     <div class="card">
       <h5 class="card-header">Holidays</h5>
@@ -113,13 +122,45 @@ onMounted(()=>{
                   <i class="bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                  <a class="dropdown-item" href="javascript:void(0);" @click="holidayStore.edit(item.id)" data-bs-toggle="modal"
+                     data-bs-target="#modalCenterEdit"><i class="bx bx-edit-alt me-1"></i> Edit</a>
                   <a class="dropdown-item" href="javascript:void(0);" @click="removeHoliday(item.id)"><i class="bx bx-trash me-1"></i> Delete</a>
                 </div>
               </div>
             </td>
           </tr>
 
+<!--          edit modal -->
+          <div class="modal fade" id="modalCenterEdit" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalCenterTitle">Edit Holiday</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                </div>
+                <form @submit.prevent="updateHoliday">
+                  <div class="modal-body">
+                    <div class="mb-6">
+                      <InputField label="Holiday Name" v-model="holidayStore.inputField.holiday_name" placeholder="Enter holiday name"/>
+                    </div>
+                    <div class="mb-6">
+                      <InputField type="text" id="date" label="Holiday Date" v-model="holidayStore.inputField.holiday_date" placeholder="Enter holiday date"/>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
+                      Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
           </tbody>
         </table>
       </div>

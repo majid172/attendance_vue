@@ -32,10 +32,15 @@ const editDept = (id)=>{
 
 const updateDept = async () => {
   try {
-     departmentStore.update();
     const modalElement = document.getElementById("modalCenter");
-    const modal = new bootstrap.Modal(modalElement);
-    modal.hide();
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    const triggerButton = document.querySelector('[data-bs-target="#modalCenter"]');
+    if (triggerButton) {
+      triggerButton.focus();
+    }
+    modalInstance.hide();
+    departmentStore.update();
+
 
   } catch (error) {
     console.error("Error updating department:", error);

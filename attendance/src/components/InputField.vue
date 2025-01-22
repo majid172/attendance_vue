@@ -3,7 +3,7 @@ import { ref, watch } from "vue";
 
 const props = defineProps({
   label: { type: String, required: true },
-  modelValue: { type: [String, Number, Date], required: true },
+  modelValue: { type: [String, Number, Date,null], required: true },
   placeholder: { type: String, default: "" },
   type: { type: String, default: "text" },
   id: { type: String },

@@ -25,6 +25,17 @@ const displayKey = ref('name');
 const editEmp = (id) =>{
     employeeStore.editEmployee(id);
 }
+const updateEmp = ()=>{
+  const modalElement = document.getElementById("modalCenter");
+  const modalInstance = bootstrap.Modal.getInstance(modalElement);
+  const triggerButton = document.querySelector('[data-bs-target="#modalCenter"]');
+  if (triggerButton) {
+    triggerButton.focus();
+  }
+  modalInstance.hide();
+  employeeStore.update();
+}
+
 const changePage = (page) => {
   if (page >= 1 && page <= totalPages.value) {
     currentPage.value = page;
@@ -72,14 +83,14 @@ onMounted(()=>{
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="javascript:void(0);" @click="editEmp(item.id)"
                      data-bs-toggle="modal"
-                     :data-bs-target="'#modalCenter_' + item.id"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                     data-bs-target="#modalCenter"><i class="bx bx-edit-alt me-1"></i> Edit</a>
                   <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
                 </div>
 
               </div>
             </td>
 
-            <div class="modal fade" :id="'modalCenter_' + item.id" tabindex="-1" aria-hidden="true">
+            <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -90,7 +101,7 @@ onMounted(()=>{
                       data-bs-dismiss="modal"
                       aria-label="Close"></button>
                   </div>
-                  <form>
+                  <form @submit.prevent="updateEmp">
                     <div class="modal-body">
                       <div class="mb-6">
                         <InputField
@@ -109,14 +120,6 @@ onMounted(()=>{
                         />
                       </div>
 
-                      <div class="mb-6 text-left">
-                        <SelectField
-                          label="Department"
-                          icon="bx bx-buildings"
-                          v-model="employeeStore.inputField.dep_name" :displayKey = "displayKey"
-                          :options="departmentStore.departments"
-                        />
-                      </div>
                       <div class="mb-6">
                         <InputField
                           label="Designation"
@@ -139,7 +142,7 @@ onMounted(()=>{
                       <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
                         Close
                       </button>
-                      <button type="button" class="btn btn-primary">Save</button>
+                      <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                   </form>
                 </div>
