@@ -57,18 +57,24 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
         DB::table('employees')
             ->where('id', $id)
             ->update([
                 'full_name' => $request->input('full_name'),
                 'phone' => $request->input('phone'),
-                'designation' => $request->input('designation'),
-                'status' => $request->input('status'),
+                'email' => $request->input('email'),
+                'designation' => $request->input('emp_designation'),
             ]);
 
         // Fetch and return the updated employee
         $updatedEmployee = DB::table('employees')->where('id', $id)->first();
-        return $updatedEmployee;
+        return response()->json([
+            'employee' => $updatedEmployee,
+            'status' => 'success',
+            'message' => 'Employee updated successfully.',
+        ]);
+
     }
 
     /**
@@ -76,6 +82,13 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::table('employees')->where('id', $id)->delete();
+        try {
+            $employee = DB::table('employees')->where('id',$id);
+            $employee->delete();
+            return 'Holiday deleted successfully';
+//            return redirect()->route('holidays.index')->with('success', 'Holiday deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('holidays.index')->with('error', 'Failed to delete holiday.');
+        }
     }
 }

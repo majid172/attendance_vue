@@ -1,5 +1,7 @@
 <script setup>
-
+import userIcon from '../assets/image/user.png';
+import attendIcon from '../assets/image/attendance.png';
+import absenceIcon from '../assets/image/absence.png';
 </script>
 <template>
   <div class="container-xxl flex-grow-1 container-p-y">
@@ -9,7 +11,7 @@
           <div class="d-flex align-items-start row">
             <div class="col-sm-7">
               <div class="card-body">
-                <h5 class="card-title text-primary mb-3">Congratulations John! 🎉</h5>
+                <h5 class="card-title text-primary mb-3">Congratulations Regnum ! 🎉</h5>
                 <p class="mb-6">
                   You have done 72% more sales today.<br />Check your new badge in your profile.
                 </p>
@@ -36,10 +38,7 @@
               <div class="card-body">
                 <div class="card-title d-flex align-items-start justify-content-between mb-4">
                   <div class="avatar flex-shrink-0">
-                    <img
-                      src="../assets/img/icons/unicons/chart-success.png"
-                      alt="chart success"
-                      class="rounded" />
+                    <img :src="userIcon" alt="User Icon" class="rounded" />
                   </div>
                   <div class="dropdown">
                     <button
@@ -57,8 +56,8 @@
                     </div>
                   </div>
                 </div>
-                <p class="mb-1">Profit</p>
-                <h4 class="card-title mb-3">$12,628</h4>
+                <p class="mb-1">All Employees</p>
+                <h4 class="card-title mb-3">12,628</h4>
                 <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
               </div>
             </div>
@@ -69,7 +68,7 @@
                 <div class="card-title d-flex align-items-start justify-content-between mb-4">
                   <div class="avatar flex-shrink-0">
                     <img
-                      src="../assets/img/icons/unicons/wallet-info.png"
+                      :src="attendIcon"
                       alt="wallet info"
                       class="rounded" />
                   </div>
@@ -89,8 +88,8 @@
                     </div>
                   </div>
                 </div>
-                <p class="mb-1">Sales</p>
-                <h4 class="card-title mb-3">$4,679</h4>
+                <p class="mb-1">Today Attend</p>
+                <h4 class="card-title mb-3">4,679</h4>
                 <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
               </div>
             </div>
@@ -104,7 +103,7 @@
             <div class="col-lg-8">
               <div class="card-header d-flex align-items-center justify-content-between">
                 <div class="card-title mb-0">
-                  <h5 class="m-0 me-2">Total Revenue</h5>
+                  <h5 class="m-0 me-2">Today's Attendance</h5>
                 </div>
                 <div class="dropdown">
                   <button
@@ -174,7 +173,7 @@
                       <small>
 
                       </small>
-                      <h6 class="mb-0">$41.2k</h6>
+                      <h6 class="mb-0">41.2k</h6>
                     </div>
                   </div>
                 </div>
@@ -191,7 +190,7 @@
               <div class="card-body">
                 <div class="card-title d-flex align-items-start justify-content-between mb-4">
                   <div class="avatar flex-shrink-0">
-                    <img src="../assets/img/icons/unicons/paypal.png" alt="paypal" class="rounded" />
+                    <img :src="absenceIcon" alt="paypal" class="rounded" />
                   </div>
                   <div class="dropdown">
                     <button
@@ -209,8 +208,8 @@
                     </div>
                   </div>
                 </div>
-                <p class="mb-1">Payments</p>
-                <h4 class="card-title mb-3">$2,456</h4>
+                <p class="mb-1">Today Absence</p>
+                <h4 class="card-title mb-3">2,456</h4>
                 <small class="text-danger fw-medium"><i class="bx bx-down-arrow-alt"></i> -14.82%</small>
               </div>
             </div>
@@ -238,7 +237,7 @@
                     </div>
                   </div>
                 </div>
-                <p class="mb-1">Transactions</p>
+                <p class="mb-1">Leave</p>
                 <h4 class="card-title mb-3">$14,857</h4>
                 <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
               </div>

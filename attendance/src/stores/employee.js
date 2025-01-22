@@ -16,7 +16,7 @@ export const useEmployeeStore = defineStore('employeeStore',{
   actions:{
     async fetchList(){
       const {data} = await axios('employee');
-      console.log(data)
+      // console.log(data)
       this.employees = data;
     },
     async editEmployee(id){
@@ -31,7 +31,21 @@ export const useEmployeeStore = defineStore('employeeStore',{
     async update(){
 
       const id = this.inputField.id;
-      const {data} = await axios.put(`/emplo`)
+      const {data} = await axios.put(`/employee/${id}`,this.inputField);
+      // console.log(data);
+      if (data) {
+        this.employees = this.employees.map(employee =>
+          employee.id == id ? { ...employee, full_name: this.inputField.full_name } : employee
+        );
+      }
+      this.fetchList();
+    },
+
+    async remove(id)
+    {
+      const { data } = await axios.delete(`/employee/${id}`);
+
+      this.employees = this.employees.filter((employee) => employee.id !== id);
     }
   },
 });

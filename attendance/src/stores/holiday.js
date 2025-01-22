@@ -33,7 +33,6 @@ export const useHolidayStore = defineStore('holiday',{
     {
       const id = this.inputField.holiday_id;
       const {data} = await axios.put(`/holidays/${id}`,this.inputField);
-      console.log(data)
       if (data) {
         this.holidays = this.holidays.map(holiday =>
           holiday.id == id ? { ...holiday, holiday_name: this.inputField.holiday_name } : holiday

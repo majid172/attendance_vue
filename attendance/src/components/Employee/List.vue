@@ -84,7 +84,7 @@ onMounted(()=>{
                   <a class="dropdown-item" href="javascript:void(0);" @click="editEmp(item.id)"
                      data-bs-toggle="modal"
                      data-bs-target="#modalCenter"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                  <a class="dropdown-item" href="javascript:void(0);" @click="employeeStore.remove(item.id)"><i class="bx bx-trash me-1"></i> Delete</a>
                 </div>
 
               </div>
@@ -142,7 +142,7 @@ onMounted(()=>{
                       <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
                         Close
                       </button>
-                      <button type="submit" class="btn btn-primary">Save</button>
+                      <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                   </form>
                 </div>
