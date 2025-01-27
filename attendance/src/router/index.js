@@ -6,10 +6,16 @@ import LeaveListView from "@/views/Leave/ListView.vue";
 import YearlyStatusView from "@/views/Leave/YearlyStatusView.vue";
 import DepartmentListView from "@/views/Department/DepartmentListView.vue";
 import HolidayListView from "@/views/Holiday/ListView.vue";
+import LoginView from '@/views/Auth/LoginView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path:'/login',
+      name:'login',
+      component: LoginView
+    },
     {
       path: '/',
       name: 'home',
