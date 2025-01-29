@@ -1,89 +1,86 @@
 
 <script setup>
-// Script logic can go here if needed
+import { useLoginStore } from '@/stores/login';
+import InputField from '@/components/InputField.vue';
+import { ref } from 'vue';
+const loginStore = useLoginStore();
+const requestForm = async ()=>{
+  loginStore.login();
+}
 </script>
 
 <template>
-  <div class="container-xxl">
-    <div class="authentication-wrapper authentication-basic container-p-y">
-      <div class="authentication-inner">
-        <!-- Login Card -->
-        <div class="card px-sm-6 px-0">
-          <div class="card-body">
-            <!-- Logo -->
-            <div class="app-brand justify-content-center">
-              <a href="index.html" class="app-brand-link gap-2">
-                <span class="app-brand-logo demo">
-                  <svg
-                    width="25"
-                    viewBox="0 0 25 42"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <defs>
-                      <path
-                        d="M13.7918663,0.358365126 L3.39788168,7.44174259 C..."
-                      ></path>
-                    </defs>
-                    <g
-                      id="g-app-brand"
-                      stroke="none"
-                      stroke-width="1"
-                      fill="none"
-                      fill-rule="evenodd">
-                      <g id="Brand-Logo" transform="translate(-27.000000, -15.000000)">
-                        <g id="Icon" transform="translate(27.000000, 15.000000)">
-                          <g id="Mask" transform="translate(0.000000, 8.000000)">
-                            <mask id="mask-2" fill="white">
-                              <use xlink:href="#path-1"></use>
-                            </mask>
-                            <use fill="#696cff" xlink:href="#path-1"></use>
-                            <g id="Path-3" mask="url(#mask-2)">
-                              <use fill="#696cff" xlink:href="#path-1"></use>
-                            </g>
-                          </g>
-                        </g>
-                      </g>
-                    </g>
-                  </svg>
-                </span>
-                <span class="app-brand-text demo text-body fw-bolder">VueApp</span>
-              </a>
+    <div class="container">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+          <!-- Register -->
+          <div class="card px-sm-6 px-0">
+            <div class="card-body">
+              <!-- Logo -->
+              <div class="app-brand justify-content-center">
+                <a href="index.html" class="app-brand-link gap-2">
+                  <span class="app-brand-logo demo">
+
+                  </span>
+                  <span class="app-brand-text demo text-heading fw-bold">ATTENDANCE SYSTEM</span>
+                </a>
+              </div>
+              <!-- /Logo -->
+              <h4 class="mb-1">Welcome to software 👋</h4>
+              <p class="mb-6">Please sign-in to your account and start the adventure</p>
+
+              <form id="formAuthentication" class="mb-6" @submit.prevent="requestForm">
+                <div class="mb-6">
+                  <label for="email" class="form-label">Email or Username</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    v-model="loginStore.inputField.email"
+                    placeholder="Enter your email or username"
+                    autofocus />
+                </div>
+
+                <div class="mb-6 form-password-toggle">
+                  <label class="form-label" for="password">Password</label>
+                  <div class="input-group input-group-merge">
+                    <input
+                      type="password"
+                      id="password"
+                      class="form-control"
+                      v-model="loginStore.inputField.password"
+                      placeholder="Enter user password"
+                      aria-describedby="password" />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                  </div>
+                </div>
+                <!-- <div class="mb-6 form-password-toggle">
+                  <InputField type="password" id="password" v-model="loginStore.inputField.password" placeholder="Enter user password" aria-describedby="password"/>
+                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div> -->
+                <div class="mb-8">
+                  <div class="d-flex justify-content-between mt-8">
+                    <div class="form-check mb-0 ms-2">
+                      <input class="form-check-input" type="checkbox" id="remember-me" />
+                      <label class="form-check-label" for="remember-me"> Remember Me </label>
+                    </div>
+                    <a href="auth-forgot-password-basic.html">
+                      <span>Forgot Password?</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
+                </div>
+              </form>
+
+
             </div>
-            <!-- /Logo -->
-
-            <h4 class="mb-2">Welcome to Sneat! 👋</h4>
-            <p class="mb-4">Please sign-in to your account</p>
-
-            <!-- Login Form -->
-            <form id="formAuthentication" class="mb-3">
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  autofocus />
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  name="password"
-                  placeholder="Enter your password" />
-              </div>
-              <button class="btn btn-primary d-grid w-100">Sign in</button>
-            </form>
-            <!-- /Login Form -->
           </div>
+          <!-- /Register -->
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <style>

@@ -11,6 +11,7 @@ export const useDashboardStore= defineStore('dashboardStore',{
   }),
   actions:{
     async employees(){
+      const token = localStorage.getItem("token");
       const {data}= await axios.get('/dashboard');
       console.log(data)
       this.totalEmployee = data.totalEmployees;

@@ -15,5 +15,6 @@ app.use(CanvasJSChart);
 app.use(createPinia())
 app.use(router)
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
+axios.defaults.withCredentials = true;
 
 app.mount('#appp')

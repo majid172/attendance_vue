@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import { useLoginStore } from '@/stores/login';
+const loginStore = useLoginStore();
+
+</script>
 <template>
   <nav
     class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
@@ -74,20 +78,12 @@
             <li>
               <a class="dropdown-item" href="#"> <i class="bx bx-cog bx-md me-3"></i><span>Settings</span> </a>
             </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card bx-md me-3"></i
-                          ><span class="flex-grow-1 align-middle">Billing Plan</span>
-                          <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
-                        </span>
-              </a>
-            </li>
+
             <li>
               <div class="dropdown-divider my-1"></div>
             </li>
             <li>
-              <a class="dropdown-item" href="javascript:void(0);">
+              <a class="dropdown-item" href="javascript:void(0);" @click="loginStore.logout()">
                 <i class="bx bx-power-off bx-md me-3"></i><span>Log Out</span>
               </a>
             </li>

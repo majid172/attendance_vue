@@ -11,6 +11,7 @@ export const useHolidayStore = defineStore('holiday',{
   }),
   actions:{
     async list(){
+  
       const {data}=await axios.get('holidays');
       this.holidays = data;
     },

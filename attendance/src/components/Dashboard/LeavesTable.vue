@@ -21,6 +21,9 @@ defineProps({
           </tr>
         </thead>
         <tbody class="table-border-bottom-0">
+        <tr v-if="dashboardStore.leaveHistorys.length === 0">
+          <td colspan="6" class="text-center">No data available</td>
+        </tr>
           <tr v-for="(item,index) in dashboardStore.leaveHistorys">
             <td>{{ ++index }}</td>
             <td>{{ item.full_name }}</td>
@@ -30,7 +33,7 @@ defineProps({
             </td>
             <td><span class="badge bg-label-primary me-1">{{ item.leave_date }}</span></td>
             <td><span class="badge bg-label-primary me-1">{{ item.days_taken }}</span></td>
-           
+
           </tr>
 
         </tbody>

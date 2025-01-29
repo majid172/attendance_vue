@@ -4,7 +4,9 @@
 use App\Http\Controllers\Api\HolidayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Dashboard\DashboardController;
 use App\Http\Controllers\Api\AttendanceController;
+use App\Http\Controllers\Api\Auth\UserController;
 use App\Http\Controllers\Department\DepartmentController;
 use App\Http\Controllers\Api\Employee\EmployeeController;
 use App\Http\Controllers\Api\Leave\LeaveManagementController;
@@ -19,12 +21,18 @@ use App\Http\Controllers\Api\Leave\LeaveManagementController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
 
-Route::resource('department', DepartmentController::class);
-Route::resource('employee', EmployeeController::class);
-Route::resource('attendance', AttendanceController::class);
-Route::resource('holidays', HolidayController::class);
-Route::resource('leaves',LeaveManagementController::class);
+// Protected Routes (Requires Authentication)
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::resource('department', DepartmentController::class);
+    Route::resource('employee', EmployeeController::class);
+    Route::resource('attendance', AttendanceController::class);
+    Route::resource('holidays', HolidayController::class);
+    Route::resource('leaves', LeaveManagementController::class);
+
+    // Logout Route
+    Route::post('/logout', [UserController::class, 'logout']);
+});

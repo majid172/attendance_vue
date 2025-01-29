@@ -76,6 +76,9 @@ onMounted(()=>{
           </tr>
           </thead>
           <tbody class="table-border-bottom-0">
+          <tr v-if="leaveStore.leaves.length === 0">
+            <td colspan="6" class="text-center">No data found</td>
+          </tr>
           <tr v-for="(item,index) in leaveStore.leaves">
             <td>{{ index+1 }}</td>
             <td>{{ item.full_name }}</td>
