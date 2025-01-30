@@ -69,7 +69,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !token) {
     next({ name: "login" });
   } else if (to.meta.guestOnly && token) {
-    next({ name: "dashboard" }); 
+    next({ name: "dashboard" });
   } else {
     next();
   }

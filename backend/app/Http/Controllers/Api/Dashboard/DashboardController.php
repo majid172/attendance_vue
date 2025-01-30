@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -33,13 +34,16 @@ class DashboardController extends Controller
                         ->select('leaves.*', 'employees.*')
                         ->get();
 
+        $user = Auth::user();
+
         return response()->json([
             'totalEmployees' => $totalEmployees,
             'todayAttendence' => $todayAttendence,
             'todayLeave' => $todayLeave,
             'upcomingHoliday' => $upcomingHoliday,
             'dailyHistory' => $dailyHistory,
-            'leaveHistory' => $leaveHistory
+            'leaveHistory' => $leaveHistory,
+            'user' => $user
         ]);
     }
 }

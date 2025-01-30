@@ -1,4 +1,14 @@
 <script setup>
+import SelectField from '../SelectField.vue';
+import { useDepartmentStore } from '@/stores/department';
+import { useLeaveStore } from '@/stores/leave';
+import { onMounted } from 'vue';
+const departmentStore = useDepartmentStore();
+const leaveStore = useLeaveStore();
+
+onMounted(()=>{
+  departmentStore.list();
+})
 </script>
 <template>
   <div class="container-xxl flex-grow-1 container-p-y">
@@ -17,7 +27,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="modalCenterTitle">Individual Leave Report</h5>
+              <h5 class="modal-title" id="modalCenterTitle">Individual Employee Leave Report</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -27,32 +37,21 @@
             <form>
               <div class="modal-body">
                 <div class="mb-6">
-                  <label class="form-label" for="defaultSelect">Select Department</label>
-                  <select id="defaultSelect" class="form-select">
-                    <option>Default select</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
+                  <SelectField label="Select Department" id="depId" v-model="leaveStore.inputFiled.department" :options="departmentStore.departments" displayKey="name"/>
+
                 </div>
 
                 <div class="mb-6">
                   <label class="form-label" for="defaultSelect">Select Employee</label>
-                  <select id="defaultSelect" class="form-select">
-                    <option>Default select</option>
-                    <option value="1">Majid</option>
-                    <option value="2">Fazla Rabby</option>
-                    <option value="3">Rabiul</option>
-                  </select>
+
                 </div>
 
                 <div class="mb-6">
                   <label class="form-label" for="defaultSelect">Select Year</label>
-                  <select id="defaultSelect" class="form-select">
-                    <option>Default select</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                  <select id="defaultSelect" class="form-select" v-model="leaveStore.inputFiled.year">
+                      <option value="">Choose Year</option>
+                      <option value="2025">2025</option>
+                      <option value="2024">2024</option>
                   </select>
                 </div>
 
@@ -61,7 +60,7 @@
                 <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary">Submit</button>
               </div>
             </form>
           </div>
@@ -72,7 +71,7 @@
     </div>
     <!-- Basic Bootstrap Table -->
     <div class="card">
-      <h5 class="card-header">Yearly Leave Status</h5>
+      <h5 class="card-header">Yearly Employee Leave Status</h5>
       <div class="table-responsive text-nowrap">
         <table class="table">
           <thead>

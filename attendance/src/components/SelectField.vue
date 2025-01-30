@@ -35,7 +35,7 @@ watch(selectedValue, (newValue) => {
         <option disabled value="">Select an option</option>
         <option v-for="option in options" :key="option.id" :value="option.id">
           {{ option[displayKey] }}
-        </option>
+        </option>                
       </select>
     </div>
   </div>

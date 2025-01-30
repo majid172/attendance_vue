@@ -15,6 +15,7 @@ import DailyReport from "@/components/Attendance/DailyReport.vue";
 const dashboardStore = useDashboardStore();
 onMounted(()=>{
   dashboardStore.employees();
+  console.log(dashboardStore.authUser.id);
 })
 
 </script>
@@ -43,7 +44,7 @@ onMounted(()=>{
           <div class="d-flex align-items-start row">
             <div class="col-sm-7">
               <div class="card-body">
-                <h5 class="card-title text-primary mb-3">Congratulations Regnum ! 🎉</h5>
+                <h5 class="card-title text-primary mb-3">Congratulations {{ dashboardStore.authUser?.name || 'Guest' }} ! 🎉</h5>
                 <p class="mb-6">
                   You have done 72% more sales today.<br />Check your new badge in your profile.
                 </p>

@@ -1,5 +1,6 @@
 <script setup>
 import { useLoginStore } from '@/stores/login';
+
 const loginStore = useLoginStore();
 
 </script>
@@ -61,7 +62,7 @@ const loginStore = useLoginStore();
                     </div>
                   </div>
                   <div class="flex-grow-1">
-                    <h6 class="mb-0">John Doe</h6>
+                    <h6 class="mb-0"></h6>
                     <small class="text-muted">Admin</small>
                   </div>
                 </div>
