@@ -25,8 +25,9 @@ export const useLoginStore = defineStore('loginStore', {
     },
     async logout() {
       try {
-        const token = localStorage.getItem("token");
 
+        const token = localStorage.getItem("token");
+        
         if (!token) {
           console.warn("No token found, redirecting to login...");
           router.push("/");

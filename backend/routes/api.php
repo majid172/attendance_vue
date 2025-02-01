@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\Auth\UserController;
 use App\Http\Controllers\Department\DepartmentController;
 use App\Http\Controllers\Api\Employee\EmployeeController;
+use App\Http\Controllers\Api\Leave\EmployeeLeaveController;
 use App\Http\Controllers\Api\Leave\LeaveManagementController;
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('attendance', AttendanceController::class);
     Route::resource('holidays', HolidayController::class);
     Route::resource('leaves', LeaveManagementController::class);
+    Route::resource('employeeLeave',EmployeeLeaveController::class);
 
     // Logout Route
     Route::post('/logout', [UserController::class, 'logout']);

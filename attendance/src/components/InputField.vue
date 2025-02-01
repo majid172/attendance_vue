@@ -31,6 +31,7 @@ watch(inputValue, (newValue) => {
 </script>
 
 <template>
+<div class="mb-6">
   <label class="form-label" :for="id || label">{{ label }}</label>
   <div class="input-group input-group-merge">
     <span v-if="icon" class="input-group-text">
@@ -44,6 +45,7 @@ watch(inputValue, (newValue) => {
       v-model="inputValue"
       :aria-label="placeholder"
     />
+  </div>
   </div>
 </template>
 

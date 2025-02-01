@@ -40,7 +40,12 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if(!$id)
+        {
+            return 'Select Department';
+        }
+        $employees = DB::table('employees')->select('id','full_name')->where('department_id',$id)->get();
+        return $employees;
     }
 
     /**

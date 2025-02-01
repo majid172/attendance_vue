@@ -1,8 +1,11 @@
 import {defineStore} from "pinia";
 import axios from "axios";
+import router from "@/router";
 export const useLeaveStore = defineStore('leave',{
   state:()=>({
     leaves:[],
+    employeeName: null,
+    employees:[],
     inputFiled:{
       department: '',
       employee:'',
@@ -15,8 +18,24 @@ export const useLeaveStore = defineStore('leave',{
       this.leaves = data;
     },
 
-    async employeeSatus(){
-      alert('okkk');
+    async employeeStatus(){
+
+      const {data} = await axios.post('/employeeLeave',this.inputFiled);
+      console.log(data);
+      this.leaves = data.formattedMonthlyStatus;
+      this.employeeName = data.employee;
+      // router.push('/')
+
+
+    },
+    async getEmployee()
+    {
+      const depId = this.inputFiled.department;
+      // this.employees = aw
+      const {data} = await axios.get(`/employee/${depId}`);
+      console.log(data)
+      this.employees = data
+
     }
   }
 });

@@ -8,7 +8,17 @@ const leaveStore = useLeaveStore();
 
 onMounted(()=>{
   departmentStore.list();
+  // leaveStore.getEmployee();
 })
+
+const showLeaveStatus = async () => {
+
+  const modalElement = document.getElementById("modalCenter");
+  const modalInstance = bootstrap.Modal.getInstance(modalElement);
+  modalInstance.hide();
+  leaveStore.employeeStatus();
+
+}
 </script>
 <template>
   <div class="container-xxl flex-grow-1 container-p-y">
@@ -34,25 +44,31 @@ onMounted(()=>{
                 data-bs-dismiss="modal"
                 aria-label="Close"></button>
             </div>
-            <form>
+            <form @submit.prevent="showLeaveStatus">
               <div class="modal-body">
                 <div class="mb-6">
-                  <SelectField label="Select Department" id="depId" v-model="leaveStore.inputFiled.department" :options="departmentStore.departments" displayKey="name"/>
+                  <SelectField label="Select Department" id="depId" v-model="leaveStore.inputFiled.department" :options="departmentStore.departments" displayKey="name" @change="leaveStore.getEmployee()"/>
 
                 </div>
 
                 <div class="mb-6">
-                  <label class="form-label" for="defaultSelect">Select Employee</label>
+                  <SelectField label="Select Employee" id="employeeId" v-model="leaveStore.inputFiled.employee" :options="leaveStore.employees" displayKey="full_name" aria-disabled="true" icon="bx bx-user"></SelectField>
 
                 </div>
 
                 <div class="mb-6">
+
                   <label class="form-label" for="defaultSelect">Select Year</label>
-                  <select id="defaultSelect" class="form-select" v-model="leaveStore.inputFiled.year">
+                  <div class="input-group input-group-merge">
+                  <span class="input-group-text">
+                    <i class="bx bx-calendar"></i>
+                  </span>
+                  <select id="defaultSelect" class="form-select" v-model="leaveStore.inputFiled.year" >
                       <option value="">Choose Year</option>
                       <option value="2025">2025</option>
                       <option value="2024">2024</option>
                   </select>
+                  </div>
                 </div>
 
               </div>
@@ -60,7 +76,7 @@ onMounted(()=>{
                 <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="button" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>
           </div>
@@ -71,89 +87,32 @@ onMounted(()=>{
     </div>
     <!-- Basic Bootstrap Table -->
     <div class="card">
-      <h5 class="card-header">Yearly Employee Leave Status</h5>
+      <h5 class="card-header"> <span v-if="leaveStore.employeeName">{{ leaveStore.employeeName.full_name}} Yearly Leave</span>
+      <span v-else> Employee Yearly Leaves</span>
+      </h5>
       <div class="table-responsive text-nowrap">
         <table class="table">
           <thead>
           <tr>
             <th>SL.</th>
-            <th>Employee</th>
+            <th>Month</th>
             <th>Total Leave</th>
-            <th>Remain Leave</th>
-            <th>Actions</th>
+
           </tr>
           </thead>
           <tbody class="table-border-bottom-0">
-          <tr>
-            <td>1</td>
-            <td>Albert Cook</td>
-            <td>
-              14
-            </td>
-            <td><span class="badge bg-label-primary me-1">Active</span></td>
-            <td>
-              <div class="dropdown">
-                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                </div>
-              </div>
-            </td>
+          <tr v-if="leaveStore.leaves.length == 0">
+          <td class="text-danger text-center" colspan="3"><p> Please select employee</p></td>
           </tr>
-          <tr>
-            <td>2</td>
-            <td>Barry Hunter</td>
-            <td>14</td>
-            <td><span class="badge bg-label-success me-1">Completed</span></td>
-            <td>
-              <div class="dropdown">
-                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>
-                </div>
-              </div>
-            </td>
+          <tr v-for="(item, index) in leaveStore.leaves" :key="index">
+            <td>{{ ++index }}</td>
+            <td>{{ item.month }}</td>
+            <td><span class="badge bg-label-primary me-1">{{ item.total_leaves }}</span></td>
           </tr>
-          <tr>
-            <td>3</td>
-            <td>Trevor Baker</td>
-            <td>14</td>
-            <td><span class="badge bg-label-info me-1">Scheduled</span></td>
-            <td>
-              <div class="dropdown">
-                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Jerry Milton</td>
-            <td>14</td>
-            <td><span class="badge bg-label-warning me-1">Pending</span></td>
-            <td>
-              <div class="dropdown">
-                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>
-                </div>
-              </div>
-            </td>
-          </tr>
+          <!-- <tr>
+              <td colspan="2">Leave Remaining</td>
+              <td>{{ leaveStore.employeeName.leave_days_remaining }}</td>
+          </tr> -->
           </tbody>
         </table>
       </div>

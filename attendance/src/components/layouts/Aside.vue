@@ -100,10 +100,10 @@ import {RouterLink} from "vue-router";
         </router-link>
       </li>
       <li class="menu-item">
-        <a href="cards-basic.html" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-collection"></i>
+        <router-link to="/monthly-report" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-calendar-event"></i>
           <div class="text-truncate" data-i18n="Basic">Monthly Report</div>
-        </a>
+        </router-link>
       </li>
 
 

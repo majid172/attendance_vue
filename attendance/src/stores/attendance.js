@@ -19,6 +19,7 @@ export const useAttendanceStore = defineStore('attendance',{
       const {data } = await axios.post('/attendance',this.inputField);
       this.attendances = data;
       // this.inputField = null
-    }
+    },
+
   }
 })

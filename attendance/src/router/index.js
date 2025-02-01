@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import DashboardView from "@/views/DashboardView.vue";
 import ListView from "@/views/Employee/ListView.vue";
 import DailyReportView from "@/views/Attendance/DailyReportView.vue";
+import MonthlyReportView from "@/views/Attendance/MonthlyReportView.vue";
 import LeaveListView from "@/views/Leave/ListView.vue";
 import YearlyStatusView from "@/views/Leave/YearlyStatusView.vue";
 import DepartmentListView from "@/views/Department/DepartmentListView.vue";
@@ -36,6 +37,11 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/monthly-report',
+      name: "monthlyReport",
+      component: MonthlyReportView
+    },
+    {
       path: "/leave-list",
       name: "leaveList",
       component: LeaveListView,
@@ -47,6 +53,7 @@ const router = createRouter({
       component: YearlyStatusView,
       meta: { requiresAuth: true },
     },
+
     {
       path: "/department-list",
       name: "departmentList",
