@@ -73,7 +73,14 @@ class AttendanceController extends Controller
      */
     public function show(string $id)
     {
+        $report = DB::table('attendances')
+        ->select('employee_id',DB::raw('COUNT(attendance_date) as total_present'))
+        // ->whereMonth('attendance_date',)
+        ->where('employee_id',$id)
+        ->groupBy('employee_id')
 
+        ->get();
+        return $report;
     }
 
     /**
@@ -89,7 +96,39 @@ class AttendanceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        [$year, $monthNumber] = explode('-', $request->input('month'));
+    $totalDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $monthNumber, $year);
+
+    // Count the number of Fridays in the given month
+    $totalFridays = 0;
+    for ($day = 1; $day <= $totalDaysInMonth; $day++) {
+        if (date('N', strtotime("$year-$monthNumber-$day")) == 5) { // 5 = Friday
+            $totalFridays++;
+        }
+    }
+
+    $report = DB::table('attendances')
+        ->join('employees', 'attendances.employee_id', '=', 'employees.id')
+        ->select(
+            'attendances.employee_id',
+            'employees.full_name as employee_name',
+            DB::raw("COUNT(CASE WHEN attendances.status = 'Present' THEN 1 END) as total_present"),
+            DB::raw("COUNT(CASE WHEN attendances.status = 'Leave' THEN 1 END) as total_leave"),
+            DB::raw("COUNT(CASE WHEN attendances.status = 'Holiday' THEN 1 END) as total_holiday"),
+            DB::raw("$totalDaysInMonth as total_days_in_month"),
+            DB::raw("$totalFridays as total_weekends")
+        )
+        ->whereRaw("DATE_FORMAT(attendances.attendance_date, '%Y-%m') = ?", ["$year-$monthNumber"])
+        ->where('attendances.employee_id', $id)
+        ->groupBy('attendances.employee_id', 'employees.full_name')
+        ->first(); // Fetch a single employee record
+
+    if ($report) {
+        // Calculate Total Absent (excluding Fridays)
+        $report->total_absent = $totalDaysInMonth - ($report->total_present + $report->total_leave + $report->total_holiday + $totalFridays);
+    }
+
+    return response()->json($report);
     }
 
     /**

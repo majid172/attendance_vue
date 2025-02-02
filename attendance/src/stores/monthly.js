@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-import InputField from "@/components/InputField.vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
 export const useMonthlyStore = defineStore('monthlyStore',{
   state: ()=>({
     employees:[],
@@ -18,6 +20,14 @@ export const useMonthlyStore = defineStore('monthlyStore',{
       const {data} = await axios.get(`/employee/${depId}`);
 
       this.employees = data
+    },
+    async monthlyReport()
+    {
+      console.log(this.inputField);
+      const empId = this.inputField.employee;
+      const { data } = await axios.put(`/attendance/${empId}`,this.inputField);
+
+      router.push('/monthly-report/show')
     }
   }
 })

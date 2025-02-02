@@ -20,10 +20,10 @@ onMounted(()=>{
       <div class="col-xl">
         <div class="card mb-6">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Basic with Icons</h5>
+            <h5 class="mb-0">Monthly Report</h5>
           </div>
           <div class="card-body">
-            <form @submit.prevent="">
+            <form @submit.prevent="monthlyStore.monthlyReport()">
               <!-- Row 1: Month and Report Type -->
               <div class="row">
                 <div class="col-lg-6">
