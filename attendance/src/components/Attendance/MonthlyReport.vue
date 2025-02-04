@@ -4,9 +4,27 @@ import SelectField from '../SelectField.vue';
 import { useMonthlyStore } from '@/stores/monthly';
 import { useDepartmentStore } from '@/stores/department';
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 // Initialize the Pinia store
 const monthlyStore = useMonthlyStore();
 const departmentStore = useDepartmentStore();
+const router = useRouter();
+const submitReport = async ()=>{
+  const reportData = await monthlyStore.monthlyReport();
+  console.log(reportData);
+
+  if (reportData) {
+    router.push({
+      path: "/monthly-report/show",
+      query: {
+        reportDetails: JSON.stringify(reportData),
+      },
+    });
+  }
+  else{
+   alert('Invalid request');
+  }
+}
 onMounted(()=>{
     departmentStore.list();
 
@@ -23,7 +41,7 @@ onMounted(()=>{
             <h5 class="mb-0">Monthly Report</h5>
           </div>
           <div class="card-body">
-            <form @submit.prevent="monthlyStore.monthlyReport()">
+            <form @submit.prevent="submitReport">
               <!-- Row 1: Month and Report Type -->
               <div class="row">
                 <div class="col-lg-6">
